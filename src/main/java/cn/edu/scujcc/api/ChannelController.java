@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import cn.edu.scujcc.model.Channel;
 import cn.edu.scujcc.service.ChannelService;
 /**
- * ÆµµÀ½Ó¿Ú£¬Ìá¹©¿Í»§¶Ë·ÃÎÊµÄÈë¿Ú¡£
+ * é¢‘é“æ¥å£ï¼Œæä¾›å®¢æˆ·ç«¯è®¿é—®çš„å…¥å£ã€‚
  * @author asus
  *
  */
@@ -31,64 +31,65 @@ public class ChannelController {
 		@Autowired
 		private ChannelService service;
 		/**
-		 * »ñÈ¡ËùÓĞÆµµÀ
-		 * @return ËùÓĞÆµµÀµÄÊı×é
+		 * è·å–æ‰€æœ‰é¢‘é“
+		 * @return æ‰€æœ‰é¢‘é“çš„æ•°ç»„
 		 */
 	    @GetMapping()
 		public List<Channel> getAllChannels() {
-	    	logger.info("ÕıÔÚ²éÕÒËùÓĞÆµµÀĞÅÏ¢...");
+	    	logger.info("æ­£åœ¨è¯»å–æ‰€æœ‰é¢‘é“ä¿¡æ¯...");
 	    	List<Channel> results = service.getAllChannels();
-	    	logger.debug("ËùÓĞÆµµÀµÄÊıÁ¿ÊÇ£º"+results.size());
+	    	
 			return results;
 		}
 		
 		/**
-		 * »ñÈ¡Ò»¸öÖ¸¶¨ÆµµÀµÄJSONÊı¾İ
-		 * @param id Ö¸¶¨ÆµµÀµÄ±àºÅ
-		 * @return id¶ÔÏóÆµµÀµÄJSONÊı¾İ
+		 * è·å–ä¸€ä¸ªæŒ‡å®šé¢‘é“çš„JSONæ•°æ®
+		 * @param id æŒ‡å®šé¢‘é“çš„ç¼–å·
+		 * @return idå¯¹è±¡é¢‘é“çš„JSONæ•°æ®
 		 */
 		@GetMapping("/{id}")
 		public Channel getChannel(@PathVariable String id) {
+			logger.info("æ­£åœ¨è¯»å–"+id+"çš„é¢‘é“ä¿¡æ¯..");
 			Channel c = service.getChannel(id);
 			if(c!=null) {
 				return c;
 			}else {
-				logger.error("ÕÒ²»µ½Ö¸¶¨ÆµµÀ¡£");
+				logger.error("æ‰¾ä¸åˆ°æŒ‡å®šé¢‘é“ã€‚");
 				return null;
 			}
 		}
 		
 		/**
-		 * É¾³ıÒ»¸öÖ¸¶¨ÆµµÀ
-		 * @param id ´ıÉ¾³ıÆµµÀµÄ±àºÅ	
-		 * @return ³É¹¦»òÊ§°ÜµÄÏûÏ¢
+		 * åˆ é™¤ä¸€ä¸ªæŒ‡å®šé¢‘é“
+		 * @param id å¾…åˆ é™¤é¢‘é“çš„ç¼–å·	
+		 * @return æˆåŠŸæˆ–å¤±è´¥çš„æ¶ˆæ¯
 		 */
 		@DeleteMapping("/{id}")
 		public ResponseEntity<String> deleteChannel(@PathVariable String id){
-			System.out.println("¼´½«É¾³ıÆµµÀ£¬id="+id);
+			System.out.println("å³å°†åˆ é™¤é¢‘é“ï¼Œid="+id);
 			boolean result = this.service.deleteChannel(id);
 			if(result) {
-				return ResponseEntity.ok().body("É¾³ı³É¹¦");
+				return ResponseEntity.ok().body("åˆ é™¤æˆåŠŸ");
 			}else {
-				return ResponseEntity.ok().body("É¾³ıÊ§°Ü");
+				return ResponseEntity.ok().body("åˆ é™¤å¤±è´¥");
 			}
 		}
 		
 		/**
-		 * ĞÂ½¨Ò»¸öÆµµÀ
+		 * æ–°å»ºä¸€ä¸ªé¢‘é“
 		 * 
-		 * @param c ´ıĞÂ½¨ÆµµÀµÄÊı¾İ
-		 * @return ±£´æºóµÄÆµµÀÊı¾İ
+		 * @param c å¾…æ–°å»ºé¢‘é“çš„æ•°æ®
+		 * @return ä¿å­˜åçš„é¢‘é“æ•°æ®
 		 */
 		@PostMapping
 		public Channel createChannel(@RequestBody Channel c) {
-			System.out.println("¼´½«ĞÂ½¨ÆµµÀ£¬ÆµµÀÊı¾İ£º"+c);
+			System.out.println("å³å°†æ–°å»ºé¢‘é“ï¼Œé¢‘é“æ•°æ®ï¼š"+c);
 			Channel saved=service.createChannel(c);
 			return saved;
 		}
 		@PutMapping
 		public Channel updateChannel(@RequestBody Channel c) {
-			System.out.println("¼´½«¸üĞÂÆµµÀ£¬ÆµµÀÊı¾İ£º"+c);
+			System.out.println("å³å°†æ›´æ–°é¢‘é“ï¼Œé¢‘é“æ•°æ®ï¼š"+c);
 			Channel saved=service.updateChannel(c);
 			return saved;
 		}
